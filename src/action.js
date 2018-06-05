@@ -88,14 +88,19 @@ const action = {
 			});
 		}
 	},
+	/**
+	 * front build [--absolute]
+	 */
 	build: (arg, options) => {
 		const findIndexBuildCommand = findIndex(arg, 'build')
 		if (findIndexBuildCommand !== -1) {
 			const webpackCommand = path.resolve('./node_modules/.bin/webpack')
 			const webpack = /^win/.test(process.platform) ? `${webpackCommand}.cmd` : webpackCommand
-			// execute webpack command
+			// set ABS env
 			process.env.ABS = options.absolute
+
 			const execWebpackCommand = () => {
+				// execute webpack command
 				const webpackSpwaned = spawn(webpack, ['--mode', 'production', '--progress'])
 				webpackSpwaned.stdout.on('data', (data) => {
 					log(data.toString('utf-8'))
