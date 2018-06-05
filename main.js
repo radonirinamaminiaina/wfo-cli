@@ -9,6 +9,7 @@ program
   .option('-u, --using [optional]', 'Use css framework or not')
   .option('-r, --relative [optional]', 'Relative path for assets')
   .option('-a, --absolute [optional]', 'Absolute path for assets')
+  .option('--git [optional]', 'Initialize with git')
 
 program
   .command('new')
