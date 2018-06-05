@@ -5,9 +5,13 @@ const { exec, spawn } = require('child_process')
 const figlet = require('figlet')
 const log = console.log
 const error = console.error
+const { existsSync } = require('fs')
 
 const findIndex = (arg, command) => {arg.findIndex((element) => element === command)}
 const action = {
+	/**
+	 * copy template into the dest folder
+	 */
 	copy: (arg) => {
 		// find index of arg
 		const findIndexNewCommand = findIndex(arg, 'new')
@@ -57,19 +61,24 @@ const action = {
 			throw new Error('errcom: Command not found. Use "fo --help"')
 		}
 	},
+	/**
+	 * front serve [-p [--port] <port>, -h [--host] <host>]
+	 * @param options
+	 */
 	serve: (arg, options) => {
-		const findIndexBuildCommand = findIndex(arg,'serve')
-		if (findIndexBuildCommand !== -1) {
+		const findIndexServeCommand = findIndex(arg,'serve')
+		if (findIndexServeCommand !== -1) {
 			// defined env var
-			process.env.PORT = options.port
-			process.env.HOST = options.host
+			if (options.port) process.env.PORT = options.port
+			if (options.host) process.env.HOST = options.host
 
-			// execute npm command
-			const npm = /^win/.test(process.platform) ? path.resolve(`./node_modules/.bin/webpack-dev-server.cmd`) : path.resolve(`./node_modules/.bin/webpack-dev-server`)
-			const start = spawn(npm, ['--mode', 'development', '--hot'])
+			const webpackDevServerCommand = path.resolve('./node_modules/.bin/webpack-dev-server')
+			const webpackDevServer = /^win/.test(process.platform) ? `${webpackDevServerCommand}.cmd` : webpackDevServerCommand
+			// execute webpack-dev-server command
+			const start = spawn(webpackDevServer, ['--mode', 'development', '--hot'])
 
 			// add log
-			log(chalk.green(`\n\n Front generator is serving at http://${options.host}:${options.port}`))
+			log(chalk.green(`\n\n Front generator is serving at http://${options.host || 'localhost'}:${options.port || 8080}\n\n`))
 
 			start.stdout.on('data', (data) => {
 				console.log(data.toString('utf-8'))
@@ -77,6 +86,32 @@ const action = {
 			start.stderr.on('data', (data) => {
 				console.log(`stderr: ${data.toString('utf-8')}`);
 			});
+		}
+	},
+	build: (arg, options) => {
+		const findIndexBuildCommand = findIndex(arg, 'build')
+		if (findIndexBuildCommand !== -1) {
+			const webpackCommand = path.resolve('./node_modules/.bin/webpack')
+			const webpack = /^win/.test(process.platform) ? `${webpackCommand}.cmd` : webpackCommand
+			// execute webpack command
+			process.env.ABS = options.absolute
+			const execWebpackCommand = () => {
+				const webpackSpwaned = spawn(webpack, ['--mode', 'production', '--progress'])
+				webpackSpwaned.stdout.on('data', (data) => {
+					log(data.toString('utf-8'))
+				})
+				webpackSpwaned.stderr.on('data', (data) => {
+					log(`stderr: ${data.toString('utf-8')}`)
+				})
+			}
+			if (existsSync(path.resolve('./src/assets/dist'))) {
+				exec('rm -rf src/assets/dist', (err, data) => {
+					if (err) return error(err)
+					execWebpackCommand()
+				})
+			} else {
+				execWebpackCommand()
+			}
 		}
 	}
 }

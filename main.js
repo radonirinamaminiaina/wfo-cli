@@ -24,5 +24,12 @@ program
   .action((options)=> {
     action.serve(argv, options)
   })
+program
+  .command('build')
+  .description('Build the application to prod version')
+  .option('-a, --absolute [optional]', 'Absolute path to assets')
+  .action((options)=> {
+    action.build(argv, options)
+  })
 
 program.parse(process.argv)

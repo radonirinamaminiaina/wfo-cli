@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "front serve",
     "dev": "npm start",
-    "prod:rel": "rm -rf src/assets/dist && webpack --mode production --progress",
-    "prod:abs": "set MODE_ABS=true rm -rf src/assets/dist && webpack --mode production --progress"
+    "prod:rel": "front build",
+    "prod:abs": "front build --absolute"
   },
   "author": "Radonirina Maminiaina",
   "license": "MIT",
