@@ -6,17 +6,23 @@ const [,,...argv] = process.argv
 
 program
   .version('v0.2.0')
-  .option('-u, --using [optional]', 'Use css framework or not')
-  .option('-r, --relative [optional]', 'Relative path for assets')
-  .option('-a, --absolute [optional]', 'Absolute path for assets')
-  .option('--git [optional]', 'Initialize with git')
+  .description('fo <command> [options]')
 
 program
   .command('new')
   .description('generate new template')
-  .arguments('test')
+  .option('-u, --using [optional]', 'Use css framework or not')
+  .option('--git-init [optional]', 'Initialize with git')
   .action(()=> {
-    action.copyTemplate(argv)
+    action.copy(argv)
+  })
+program
+  .command('serve')
+  .description('Serve the application')
+  .option('-p, --port <port> [optional]', 'The port where the application is served. Default: 8080')
+  .option('-h, --host <host> [optional]', 'The host where the application is served. Default: localhost')
+  .action((options)=> {
+    action.serve(argv, options)
   })
 
 program.parse(process.argv)

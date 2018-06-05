@@ -1,16 +1,19 @@
 const fs = require('fs-extra')
 const path = require('path')
 const chalk = require('chalk')
-const { exec } = require('child_process')
+const { exec, spawn } = require('child_process')
 const figlet = require('figlet')
 const log = console.log
+const error = console.error
 
+const findIndex = (arg, command) => {arg.findIndex((element) => element === command)}
 const action = {
-	copyTemplate: (arg) => {
+	copy: (arg) => {
 		// find index of arg
-		const findNewCommand = arg.findIndex((element) => element === 'new')
-		const initializeGit = arg.findIndex((element) => element === '--git')
-		if (findNewCommand !== -1) {
+		const findIndexNewCommand = findIndex(arg, 'new')
+		const finIndexGitFlag = findIndex(arg,'--git-init')
+
+		if (findIndexNewCommand !== -1) {
 			log(chalk.green('Generate your template ...'))
 			const src = path.resolve(path.dirname(require.main.filename) + '/templates')
 			const dest = path.resolve('./')
@@ -22,27 +25,27 @@ const action = {
 				log(chalk.green('\n\nInstalling your module ...'))
 				// install module
 				exec('npm install', (err, stdout) => {
-					if (err) return console.error(err)
+					if (err) return error(err)
 					log(chalk.blue.bold('Module installed.'))
-					log(chalk.blue.bold('\n\n Now you can run "npm install" to start'))
+					log(chalk.blue.bold('\n\n Now you can run "fo serve" or "npm start" to start'))
 					figlet('Thank you!', (err, data) => {
-						if (err) return console.err(err)
+						if (err) return error(err)
 						log(chalk.green(data))
 					})
 				})
 			}
 			// copy our template
 			fs.copy(src, dest, {filter: filter}, err => {
-				if (err) return console.err(err)
+				if (err) return error(err)
 				const date = new Date()
 				const now = `on ${date.getFullYear()}-${date.getMonth()}-${date.getDate()} at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
 				log(chalk.blue.bold('Your template is ready.'))
-				if (initializeGit !== -1) {
+				if (finIndexGitFlag !== -1) {
 					// initialize git repo
 					log(chalk.green(' \n\nInitialize git ...'))
 					// exec git command
 					exec(`git init && git add . && git commit -am "initialized by fo generator ${now}"`, (err, stdout) => {
-						if (err) return console.error(err)
+						if (err) return error(err)
 						log(chalk.blue.bold('git initialized.'))
 						installModule()
 					})
@@ -51,7 +54,23 @@ const action = {
 				}
 			})
 		} else {
-			log('errcom: command not found. \n Use "fo --help"')
+			throw new Error('errcom: Command not found. Use "fo --help"')
+		}
+	},
+	serve: (arg, options) => {
+		const findIndexBuildCommand = findIndex(arg,'serve')
+		if (findIndexBuildCommand !== -1) {
+			process.env.PORT = options.port
+			process.env.HOST = options.host
+			console.log(process.env.PORT)
+			const npm = /^win/.test(process.platform) ? `npm.cmd` : `PORT=${port} npm`
+			const start = spawn(npm, ['start'])
+			start.stdout.on('data', (data) => {
+				console.log(data.toString('utf-8'))
+			})
+			start.stderr.on('data', (data) => {
+				console.log(`stderr: ${data.toString('utf-8')}`);
+			});
 		}
 	}
 }
