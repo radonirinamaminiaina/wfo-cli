@@ -1,0 +1,83 @@
+@mixin min($viewport) {
+    @media (min-width: $viewport) {
+        @content;
+    }
+}
+@mixin max($viewport) {
+    @media (max-width: $viewport) {
+        @content;
+    }
+}
+@mixin mm($viewportMin, $viewportMax) {
+    @media (min-width: $viewportMin) and (max-width: $viewportMax) {
+        @content;
+    }
+}
+@mixin normalTransition($prorpety) {
+    transition: $prorpety 300ms ease;
+}
+@mixin transition($prorpety, $duration) {
+    transition: $prorpety $duration ease;
+}
+@mixin border-bottom-animate() {
+    &:after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        height: 1px;
+        width: 100%;
+        background: #fff;
+        transform: scaleX(0);
+        @include normalTransition(transform);
+        left: 0;
+    }
+    &:hover:after {
+        transform: scaleX(1); 
+        @include normalTransition(transform);
+        transition-delay: 50ms;
+    }
+}
+@mixin reset-ul() {
+    padding-left: 0!important;
+    list-style: none!important;
+}
+@mixin square($value) {
+    width: $value;
+    height: $value;
+}
+@mixin circle($value) {
+    @include square($value);
+    border-radius: 50%;
+}
+@mixin v-center() {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+@mixin x-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+@mixin xy-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+@mixin flex($jc: flex-start, $dir: row) {
+    display: flex;
+    flex-wrap: wrap;
+    @if ($dir) {
+        flex-direction: $dir;
+    }
+    @if ($jc) {
+        justify-content: $jc;
+    }
+}
+@mixin font($fs: false) {
+    font-family: $utilsFont;
+    @if ($fs) {
+        font-size: $fs;
+    }
+}
