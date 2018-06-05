@@ -1,0 +1,34 @@
+{
+  "name": "front-end-webpack",
+  "version": "0.1.0",
+  "description": "webpack config for front-end developer",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/radonirinamaminiaina/webpack-front-end.git"
+  },
+  "keywords": [
+    "\"webpack",
+    "for",
+    "front",
+    "end",
+    "developer\"",
+    "\"front",
+    "end",
+    "cli\"",
+    "\"html",
+    "and",
+    "css",
+    "projetct",
+    "generator\""
+  ],
+  "author": "Radonirina Maminiaina <radonirina.maminiaina@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/radonirinamaminiaina/webpack-front-end/issues"
+  },
+  "homepage": "https://github.com/radonirinamaminiaina/webpack-front-end#readme"
+}
