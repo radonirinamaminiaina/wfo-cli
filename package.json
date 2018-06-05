@@ -17,7 +17,7 @@
     "Webpack for front-end developer"
   ],
   "bin": {
-    "fo": "./main.js"
+    "wfo": "./main.js"
   },
   "author": "Radonirina Maminiaina <radonirina.maminiaina@gmail.com>",
   "license": "MIT",
