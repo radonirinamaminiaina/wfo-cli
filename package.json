@@ -25,6 +25,9 @@
     "projetct",
     "generator\""
   ],
+  "bin": {
+    "fg": "./main.js"
+  },
   "author": "Radonirina Maminiaina <radonirina.maminiaina@gmail.com>",
   "license": "MIT",
   "bugs": {
