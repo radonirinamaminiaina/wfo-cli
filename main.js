@@ -11,7 +11,7 @@ program
 program
   .command('new')
   .description('generate new template')
-  .option('-u, --using [optional]', 'Use css framework or not')
+  .option('-u, --using <framework> [optional]', 'Use css framework or not')
   .option('--git-init [optional]', 'Initialize with git')
   .action(()=> {
     action.copy(argv)
