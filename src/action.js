@@ -23,7 +23,7 @@ const action = {
 			const dest = path.resolve('./')
 			const filter = (src, dest) => {
 				log(`Copy ${src} to ${dest}`)
-				if (!src.match(/node_modules/)) return true
+				if (!src.match(/templates\/node_modules/i)) return true
 			}
 			const installModule = () => {
 				log(chalk.green('\n\nInstalling your module ...'))
