@@ -1,5 +1,5 @@
 {
-  "name": "front-end-webpack",
+  "name": "front-cli",
   "version": "1.0.0",
   "description": "webpack config for front-end developer",
   "main": "main.js",
@@ -11,13 +11,13 @@
     "url": "git+https://github.com/radonirinamaminiaina/webpack-front-end.git"
   },
   "keywords": [
-    "front-end cli",
+    "front-cli",
     "HTML + CSS + Webpack",
     "HTML + CSS, ES2015+",
-    "Webpack for front-end dev"
+    "Webpack for front-end developer"
   ],
   "bin": {
-    "front": "./main.js"
+    "fo": "./main.js"
   },
   "author": "Radonirina Maminiaina <radonirina.maminiaina@gmail.com>",
   "license": "MIT",
