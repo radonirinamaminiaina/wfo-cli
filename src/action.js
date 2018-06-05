@@ -22,7 +22,7 @@ const action = {
 			const src = path.resolve(path.dirname(require.main.filename) + '/templates')
 			const dest = path.resolve('./')
 			const filter = (src, dest) => {
-				log(`Copy ${src} to ${dest}`)
+				log(`Generate ${dest}`)
 				if (!src.match(/templates\/node_modules/i)) return true
 			}
 			const installModule = () => {
