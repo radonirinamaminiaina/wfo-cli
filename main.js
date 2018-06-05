@@ -5,7 +5,7 @@ const action  = require('./src/action')
 const [,,...argv] = process.argv
 
 program
-  .version('v1.0.0')
+  .version('v1.0.2')
   .description('fo <command> [options]')
 
 program
