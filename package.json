@@ -11,22 +11,13 @@
     "url": "git+https://github.com/radonirinamaminiaina/webpack-front-end.git"
   },
   "keywords": [
-    "\"webpack",
-    "for",
-    "front",
-    "end",
-    "developer\"",
-    "\"front",
-    "end",
-    "cli\"",
-    "\"html",
-    "and",
-    "css",
-    "projetct",
-    "generator\""
+    "front-end cli",
+    "HTML + CSS + Webpack",
+    "HTML + CSS, ES2015+",
+    "Webpack for front-end dev"
   ],
   "bin": {
-    "fo": "./main.js"
+    "front": "./main.js"
   },
   "author": "Radonirina Maminiaina <radonirina.maminiaina@gmail.com>",
   "license": "MIT",
