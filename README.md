@@ -3,7 +3,7 @@ Front-cli is a lightweight command line for generating webpack project for HTML 
 
 ## Installation
 ``` bash
-    npm install -g front-cli
+    npm install -g wfo
 ```
 
 ## Usage
