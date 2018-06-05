@@ -16,7 +16,7 @@ const dev = merge(common, {
       contentBase: './src',
       watchContentBase: true,
       host: process.env.HOST || 'localhost',
-      port: process.env.PORT || 8080,
+      port: process.env.PORT ? process.env.PORT : 8080,
       compress: true
     },
     plugins: [

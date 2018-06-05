@@ -65,8 +65,8 @@ const action = {
 			process.env.HOST = options.host
 
 			// execute npm command
-			const npm = /^win/.test(process.platform) ? `npm.cmd` : `PORT=${port} npm`
-			const start = spawn(npm, ['start'])
+			const npm = /^win/.test(process.platform) ? path.resolve(`./node_modules/.bin/webpack-dev-server.cmd`) : path.resolve(`./node_modules/.bin/webpack-dev-server`)
+			const start = spawn(npm, ['--mode', 'development', '--hot'])
 
 			// add log
 			log(chalk.green(`\n\n Front generator is serving at http://${options.host}:${options.port}`))
