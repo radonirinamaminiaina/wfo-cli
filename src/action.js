@@ -60,11 +60,17 @@ const action = {
 	serve: (arg, options) => {
 		const findIndexBuildCommand = findIndex(arg,'serve')
 		if (findIndexBuildCommand !== -1) {
+			// defined env var
 			process.env.PORT = options.port
 			process.env.HOST = options.host
-			console.log(process.env.PORT)
+
+			// execute npm command
 			const npm = /^win/.test(process.platform) ? `npm.cmd` : `PORT=${port} npm`
 			const start = spawn(npm, ['start'])
+
+			// add log
+			log(chalk.green(`\n\n Front generator is serving at http://${options.host}:${options.port}`))
+
 			start.stdout.on('data', (data) => {
 				console.log(data.toString('utf-8'))
 			})

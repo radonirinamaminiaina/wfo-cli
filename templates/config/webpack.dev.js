@@ -3,7 +3,6 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const sassCompiler = require('./sass-compiler')
 const merge = require('webpack-merge')
 
-console.log('process.env.PORT', process.env.PORT)
 const dev = merge(common, {
     module: {
       rules: [
