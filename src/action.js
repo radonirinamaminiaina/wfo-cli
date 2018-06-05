@@ -12,7 +12,7 @@ const action = {
 	/**
 	 * copy template into the dest folder
 	 */
-	copy: (arg) => {
+	copy: (arg, options) => {
 		// find index of arg
 		const findIndexNewCommand = findIndex(arg, 'new')
 		const finIndexGitFlag = findIndex(arg,'--git-init')
@@ -44,7 +44,7 @@ const action = {
 				const date = new Date()
 				const now = `on ${date.getFullYear()}-${date.getMonth()}-${date.getDate()} at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
 				log(chalk.blue.bold('Your template is ready.'))
-				if (finIndexGitFlag !== -1) {
+				if (options.gitInit) {
 					// initialize git repo
 					log(chalk.green(' \n\nInitialize git ...'))
 					// exec git command

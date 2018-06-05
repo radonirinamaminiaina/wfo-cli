@@ -13,22 +13,22 @@ program
   .description('generate new template')
   .option('-u, --using <framework> [optional]', 'Use css framework or not (Coming soon)')
   .option('--git-init [optional]', 'Initialize with git')
-  .action(()=> {
-    action.copy(argv)
+  .action(options => {
+    action.copy(argv, options)
   })
 program
   .command('serve')
   .description('Serve the application')
   .option('-p, --port <port> [optional]', 'The port where the application is served. Default: 8080')
   .option('-h, --host <host> [optional]', 'The host where the application is served. Default: localhost')
-  .action((options)=> {
+  .action(options => {
     action.serve(argv, options)
   })
 program
   .command('build')
   .description('Build the application to prod version')
   .option('-a, --absolute [optional]', 'Absolute path to assets')
-  .action((options)=> {
+  .action(options => {
     action.build(argv, options)
   })
 
