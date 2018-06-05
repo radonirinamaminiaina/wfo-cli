@@ -1,6 +1,6 @@
 {
   "name": "front-end-webpack",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "webpack config for front-end developer",
   "main": "main.js",
   "scripts": {

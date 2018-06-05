@@ -37,9 +37,10 @@ const action = {
 				const date = new Date()
 				const now = `on ${date.getFullYear()}-${date.getMonth()}-${date.getDate()} at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
 				log(chalk.blue.bold('Your template is ready.'))
-				log(chalk.green(' \n\nInitialize git ...'))
-				// initialize git repo
 				if (initializeGit !== -1) {
+					// initialize git repo
+					log(chalk.green(' \n\nInitialize git ...'))
+					// exec git command
 					exec(`git init && git add . && git commit -am "initialized by fo generator ${now}"`, (err, stdout) => {
 						if (err) return console.error(err)
 						log(chalk.blue.bold('git initialized.'))
