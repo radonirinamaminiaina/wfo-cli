@@ -11,7 +11,7 @@ const action = {
 		if (findNewCommand !== -1) {
 			log(chalk.green('Generate your template ...'))
 			const src = path.resolve(path.dirname(require.main.filename) + '/templates')
-			const dest = path.resolve('./generated')
+			const dest = path.resolve('./')
 			const filter = (src, dest) => {
 				log(`Copy ${src} to ${dest}`)
 				if (!src.match(/node_modules/)) return true
@@ -29,7 +29,7 @@ const action = {
 						if (err) return console.error(err)
 						log(chalk.blue.bold('Module installed.'))
 						log(chalk.blue.bold('\n Now you can run "npm install" to start'))
-						figlet('Thank you', (err, data) => {
+						figlet('Thank you!', (err, data) => {
 							if (err) return console.err(err)
 							log(chalk.green(data))
 						})
