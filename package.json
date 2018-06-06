@@ -1,5 +1,5 @@
 {
-  "name": "wfo",
+  "name": "wfo-cli",
   "version": "1.4.1",
   "description": "front-end cli generator",
   "main": "main.js",

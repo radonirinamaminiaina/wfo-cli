@@ -1,9 +1,9 @@
-# Front-cli
-Front-cli is a lightweight command line for generating webpack project for HTML + CSS and Javascript.
+# Webpack Front Office (wfo) cli generator
+ wfo-cli is a lightweight command line for generating webpack project for HTML + CSS and Javascript.
 
 ## Installation
 ``` bash
-    npm install -g front
+    npm install -g wfo-cli
 ```
 
 ## Usage
