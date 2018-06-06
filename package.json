@@ -1,6 +1,6 @@
 {
   "name": "wfo",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "front-end cli generator",
   "main": "main.js",
   "scripts": {
@@ -12,8 +12,10 @@
   },
   "keywords": [
     "front-cli",
-    "HTML + CSS + Webpack",
-    "HTML + CSS, ES2015+",
+    "HTML/CSS/Webpack",
+    "HTML/CSS/ES2015+",
+    "Integration using lazy loading",
+    "Lazy loading",
     "Webpack for front-end developer"
   ],
   "bin": {
