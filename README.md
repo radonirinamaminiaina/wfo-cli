@@ -43,3 +43,11 @@ Front-cli is a lightweight command line for generating webpack project for HTML 
 
    - **--absolute (alias -a) [optional]**: Set the [publicPath](https://webpack.js.org/guides/public-path/) into webpack config to absolute path.
 
+
+## Features
+
+ - [Lazy loading](https://webpack.js.org/guides/lazy-loading/)
+ - SCSS
+ - ES2015+
+ - Hot Module Replacement
+ - Live reload
