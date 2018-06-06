@@ -4,9 +4,13 @@ const program = require('commander')
 const action  = require('./src/action')
 const [,,...argv] = process.argv
 
+if (!argv.length) {
+  console.error('ernoarg: Please provide argument.\nE.g: front new [directory] [--git-init]')
+}
+
 program
-  .version('v1.3.0')
-  .description('fo <command> [options]')
+  .version('v1.4.0')
+  .description('front <command> [options]')
 
 program
   .command('new')
