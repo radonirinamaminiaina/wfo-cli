@@ -10,7 +10,8 @@ const { existsSync } = require('fs')
 const findIndex = (arg, command) => { arg.findIndex((element) => element === command) }
 const action = {
 	copyTemplate: (name, options) => {
-		const src = path.resolve(path.dirname(require.main.filename) + '/templates')
+		const template = options.using ? options.using : 'default'
+		const src = path.resolve(path.dirname(require.main.filename) + '/templates/' + template)
 		const dest = path.resolve(`./`)
 		const filter = (src, dest) => {
 			log(`${chalk.blue.bold('Generate')} ${dest}`)

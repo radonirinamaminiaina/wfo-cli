@@ -18,7 +18,7 @@
 **Options**
 
  -  **--git-init [optional]**: initialize project with git. Use this option if you don't have `.git` yet.
- - **--using (alias *-u*) [optional]**: Generate the project and using css framework. E.g: bootstrap (Coming soon)
+ - **--using &lt;template&gt; (alias *-u*) [optional]**: Generate the project and using css framework. Available template: bootstrap
 
 ### Serve
 ``` bash
