@@ -21,8 +21,8 @@ const dev = merge(common, {
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: "[name].css",
-        chunkFilename: "[id].[name].css"
+        filename: "[name].bundle.css",
+        chunkFilename: "[id].css"
       })
     ]
   }
