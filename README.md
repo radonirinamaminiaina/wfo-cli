@@ -12,7 +12,9 @@
   front new [name] [options]
 ```
 **Argument**
+
  - **name**: name of the directory which you want to generate project. Default: Current directory
+
 **Options**
 
  -  **--git-init [optional]**: initialize project with git. Use this option if you don't have `.git` yet.
