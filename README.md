@@ -48,7 +48,7 @@
 
 ## Features
 
- - [Lazy loading](https://webpack.js.org/guides/lazy-loading/)
+ - [Lazy loading](https://webpack.js.org/guides/lazy-loading/) [[Here the tuts](https://github.com/radonirinamaminiaina/wfo-cli/wiki/Lazy-loading-tutorial-using-wfo-cli)]
  - SCSS
  - ES2015+
  - Hot Module Replacement
