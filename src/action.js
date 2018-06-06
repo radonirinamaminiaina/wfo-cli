@@ -12,10 +12,6 @@ const action = {
 	copyTemplate: (name, options) => {
 		const src = path.resolve(path.dirname(require.main.filename) + '/templates')
 		const dest = path.resolve(`./`)
-		const filter = (src, dest) => {
-			log(`Generate ${dest}`)
-			if (!src.match(/templates\/(.*\/)?node_modules/i)) return true
-		}
 		const installModule = () => {
 			log(chalk.green('\n\nInstalling your module ...'))
 			// install module
@@ -30,7 +26,7 @@ const action = {
 			})
 		}
 		// copy our template
-		fs.copy(src, dest, { filter: filter }, err => {
+		fs.copy(src, dest, err => {
 			if (err) return error(err)
 			const date = new Date()
 			const now = `on ${date.getFullYear()}-${date.getMonth()}-${date.getDate()} at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
