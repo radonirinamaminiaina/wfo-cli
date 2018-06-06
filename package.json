@@ -1,6 +1,6 @@
 {
-  "name": "wfo",
-  "version": "1.2.3",
+  "name": "front",
+  "version": "1.3.0",
   "description": "front-end cli generator",
   "main": "main.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "Webpack for front-end developer"
   ],
   "bin": {
-    "wfo": "./main.js"
+    "front": "./main.js"
   },
   "author": "Radonirina Maminiaina <radonirina.maminiaina@gmail.com>",
   "license": "MIT",
