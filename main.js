@@ -11,10 +11,11 @@ program
 program
   .command('new')
   .description('generate new template')
+  .arguments('[name]')
   .option('-u, --using <framework> [optional]', 'Use css framework or not (Coming soon)')
   .option('--git-init [optional]', 'Initialize with git')
-  .action(options => {
-    action.copy(argv, options)
+  .action((name, options) => {
+    action.copy(argv, name, options)
   })
 program
   .command('serve')

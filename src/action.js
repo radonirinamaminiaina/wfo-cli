@@ -12,18 +12,17 @@ const action = {
 	/**
 	 * copy template into the dest folder
 	 */
-	copy: (arg, options) => {
+	copy: (arg, name, options) => {
 		// find index of arg
 		const findIndexNewCommand = findIndex(arg, 'new')
 		const finIndexGitFlag = findIndex(arg,'--git-init')
-
 		if (findIndexNewCommand !== -1) {
 			log(chalk.green('Generate your template ...'))
 			const src = path.resolve(path.dirname(require.main.filename) + '/templates')
-			const dest = path.resolve('./')
+			const dest = path.resolve(`./${name || ''}`)
 			const filter = (src, dest) => {
 				log(`Generate ${dest}`)
-				if (!src.match(/templates\/node_modules/i)) return true
+				if (!src.match(/(templates\/(.*)?\/)?node_modules/i)) return true
 			}
 			const installModule = () => {
 				log(chalk.green('\n\nInstalling your module ...'))
