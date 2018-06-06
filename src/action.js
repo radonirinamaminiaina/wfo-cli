@@ -7,60 +7,70 @@ const log = console.log
 const error = console.error
 const { existsSync } = require('fs')
 
-const findIndex = (arg, command) => {arg.findIndex((element) => element === command)}
+const findIndex = (arg, command) => { arg.findIndex((element) => element === command) }
 const action = {
+	copyTemplate: (name, options) => {
+		const src = path.resolve(path.dirname(require.main.filename) + '/templates')
+		const dest = path.resolve(`./`)
+		const filter = (src, dest) => {
+			log(`Generate ${dest}`)
+			if (!src.match(/(templates\/(.*)?\/)?node_modules/i)) return true
+		}
+		const installModule = () => {
+			log(chalk.green('\n\nInstalling your module ...'))
+			// install module
+			exec('npm install', (err, stdout) => {
+				if (err) return error(err)
+				log(chalk.blue.bold('Module installed.'))
+				log(chalk.blue.bold('\n\n Now you can run "fo serve" or "npm start" to start'))
+				figlet('Thank you!', (err, data) => {
+					if (err) return error(err)
+					log(chalk.green(data))
+				})
+			})
+		}
+		// copy our template
+		fs.copy(src, dest, { filter: filter }, err => {
+			if (err) return error(err)
+			const date = new Date()
+			const now = `on ${date.getFullYear()}-${date.getMonth()}-${date.getDate()} at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+			log(chalk.blue.bold('Your template is ready.'))
+			if (options.gitInit) {
+				// find for .git folder
+				if (!existsSync(path.resolve('./.git'))) {
+					// initialize git repo
+					log(chalk.green(' \n\nInitialize git ...'))
+					// exec git command
+					exec(`git init && git add . && git commit -am "initialized by fo generator ${now}"`, (err, stdout) => {
+						if (err) return error(err)
+						log(chalk.blue.bold('git initialized.'))
+						installModule()
+					})
+				} else {
+					installModule()
+				}
+			} else {
+				installModule()
+			}
+		})
+	},
 	/**
 	 * copy template into the dest folder
 	 */
 	copy: (arg, name, options) => {
 		// find index of arg
 		const findIndexNewCommand = findIndex(arg, 'new')
-		const finIndexGitFlag = findIndex(arg,'--git-init')
+		const finIndexGitFlag = findIndex(arg, '--git-init')
 		if (findIndexNewCommand !== -1) {
 			log(chalk.green('Generate your template ...'))
-			const src = path.resolve(path.dirname(require.main.filename) + '/templates')
-			const dest = path.resolve(`./${name || ''}`)
-			const filter = (src, dest) => {
-				log(`Generate ${dest}`)
-				if (!src.match(/(templates\/(.*)?\/)?node_modules/i)) return true
-			}
-			const installModule = () => {
-				log(chalk.green('\n\nInstalling your module ...'))
-				// install module
-				exec('npm install', (err, stdout) => {
-					if (err) return error(err)
-					log(chalk.blue.bold('Module installed.'))
-					log(chalk.blue.bold('\n\n Now you can run "fo serve" or "npm start" to start'))
-					figlet('Thank you!', (err, data) => {
-						if (err) return error(err)
-						log(chalk.green(data))
-					})
+			if (!name) {
+				action.copyTemplate(name, options)
+			} else {
+				fs.ensureDir(name, () => {
+					process.chdir(name)
+					action.copyTemplate(name, options)
 				})
 			}
-			// copy our template
-			fs.copy(src, dest, {filter: filter}, err => {
-				if (err) return error(err)
-				const date = new Date()
-				const now = `on ${date.getFullYear()}-${date.getMonth()}-${date.getDate()} at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-				log(chalk.blue.bold('Your template is ready.'))
-				if (options.gitInit) {
-					// find for .git folder
-					if (!existsSync(path.resolve('./.git'))) {
-						// initialize git repo
-						log(chalk.green(' \n\nInitialize git ...'))
-						// exec git command
-						exec(`git init && git add . && git commit -am "initialized by fo generator ${now}"`, (err, stdout) => {
-							if (err) return error(err)
-							log(chalk.blue.bold('git initialized.'))
-							installModule()
-						})
-					} else {
-						installModule()
-					}
-				} else {
-					installModule()
-				}
-			})
 		} else {
 			throw new Error('errcom: Command not found. Use "fo --help"')
 		}
@@ -70,7 +80,7 @@ const action = {
 	 * @param options
 	 */
 	serve: (arg, options) => {
-		const findIndexServeCommand = findIndex(arg,'serve')
+		const findIndexServeCommand = findIndex(arg, 'serve')
 		if (findIndexServeCommand !== -1) {
 			// defined env var
 			if (options.port) process.env.PORT = options.port
