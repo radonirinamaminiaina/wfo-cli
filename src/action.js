@@ -14,7 +14,7 @@ const action = {
 		const dest = path.resolve(`./`)
 		const filter = (src, dest) => {
 			log(`Generate ${dest}`)
-			if (!src.match(/(templates\/(.*)?\/)?node_modules/i)) return true
+			if (!src.match(/templates\/(.*\/)?node_modules/i)) return true
 		}
 		const installModule = () => {
 			log(chalk.green('\n\nInstalling your module ...'))
