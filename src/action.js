@@ -12,7 +12,7 @@ const action = {
 	copyTemplate: (name, options) => {
 		const template = options.using ? options.using : 'default'
 		const src = path.resolve(path.dirname(require.main.filename) + '/templates/' + template)
-		const dest = path.resolve(__dirname, `./`)
+		const dest = path.resolve('./')
 		const filter = (src, dest) => {
 			log(`${chalk.blue.bold('Generate')} ${dest}`)
 			return true
