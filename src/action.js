@@ -111,8 +111,8 @@ const action = {
 		if (findIndexBuildCommand !== -1) {
 			const webpackCommand = path.resolve('./node_modules/.bin/webpack')
 			const webpack = /^win/.test(process.platform) ? `${webpackCommand}.cmd` : webpackCommand
-			// set ABS env
-			process.env.ABS = options.absolute
+			// set MODE_ABS env
+			process.env.MODE_ABS = options.absolute
 
 			const execWebpackCommand = () => {
 				// execute webpack command
