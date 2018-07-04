@@ -5,7 +5,7 @@
 ``` bash
     npm install -g wfo-cli
     # Or
-    yarn add wfo-cli
+    yarn global add wfo-cli
 ```
 
 ## Usage
