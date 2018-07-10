@@ -6,25 +6,26 @@ const figlet = require('figlet')
 const log = console.log
 const error = console.error
 const { existsSync } = require('fs')
+const config = require('./config')
 
 const findIndex = (arg, command) => { arg.findIndex((element) => element === command) }
 const action = {
-	copyTemplate: (name, options) => {
+	copyTemplate: (_, options) => {
 		const template = options.using ? options.using : 'default'
 		const src = path.resolve(path.dirname(require.main.filename) + '/templates/' + template)
 		const dest = path.resolve('./')
-		const filter = (src, dest) => {
-			log(`${chalk.blue.bold('Generate')} ${dest}`)
+		const filter = (_, dest) => {
+			log(`${chalk.blue.bold(config.install.generate)} ${dest}`)
 			return true
 		}
 		const installModule = () => {
-			log(chalk.green('\n\nInstalling your module ...'))
+			log(chalk.green(config.install.progress))
 			// install module
-			exec('npm install', (err, stdout) => {
+			exec('npm install', (err) => {
 				if (err) return error(err)
-				log(chalk.blue.bold('Module installed.'))
-				log(chalk.blue.bold('\n\n Now you can run "fo serve" or "npm start" to start'))
-				figlet('Thank you!', (err, data) => {
+				log(chalk.blue.bold(config.install.complete))
+				log(chalk.blue.bold(config.install.completeInstruct))
+				figlet(config.install.thanx, (err, data) => {
 					if (err) return error(err)
 					log(chalk.green(data))
 				})
@@ -35,16 +36,16 @@ const action = {
 			if (err) return error(err)
 			const date = new Date()
 			const now = `on ${date.getFullYear()}-${date.getMonth()}-${date.getDate()} at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-			log(chalk.blue.bold('Your template is ready.'))
+			log(chalk.blue.bold(config.install.ready))
 			if (options.gitInit) {
 				// find for .git folder
 				if (!existsSync(path.resolve('./.git'))) {
 					// initialize git repo
-					log(chalk.green(' \n\nInitialize git ...'))
+					log(chalk.green(config.install.git))
 					// exec git command
-					exec(`git init && git add . && git commit -am "initialized by fo generator ${now}"`, (err, stdout) => {
+					exec(config.install.gitCommit(now), (err) => {
 						if (err) return error(err)
-						log(chalk.blue.bold('git initialized.'))
+						log(chalk.blue.bold(config.install.gitInitialized))
 						installModule()
 					})
 				} else {
@@ -61,9 +62,8 @@ const action = {
 	copy: (arg, name, options) => {
 		// find index of arg
 		const findIndexNewCommand = findIndex(arg, 'new')
-		const finIndexGitFlag = findIndex(arg, '--git-init')
 		if (findIndexNewCommand !== -1) {
-			log(chalk.green('Generate your template ...'))
+			log(chalk.green(config.install.generateTpl))
 			if (!name) {
 				action.copyTemplate(name, options)
 			} else {
@@ -73,7 +73,7 @@ const action = {
 				})
 			}
 		} else {
-			throw new Error('errcom: Command not found. Use "fo --help"')
+			throw new Error(config.install.error)
 		}
 	},
 	/**
@@ -93,7 +93,7 @@ const action = {
 			const start = spawn(webpackDevServer, ['--mode', 'development', '--hot'])
 
 			// add log
-			log(chalk.green(`\n\n Front generator is serving at http://${options.host || 'localhost'}:${options.port || 8080}\n\n`))
+			log(chalk.green(config.install.start(options)))
 
 			start.stdout.on('data', (data) => {
 				console.log(data.toString('utf-8'))
