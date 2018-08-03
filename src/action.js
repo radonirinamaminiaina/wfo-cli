@@ -12,11 +12,15 @@ const findIndex = (arg, command) => { arg.findIndex((element) => element === com
 const action = {
 	copyTemplate: (_, options) => {
 		const template = options.using ? options.using : 'default'
-		const src = path.resolve(path.dirname(require.main.filename) + '/templates/' + template)
+		const srcTpl = path.resolve(path.dirname(require.main.filename) + '/templates/' + template)
+		const srcConfig = path.resolve(path.dirname(require.main.filename) + '/src/webpack/')
+		const srcMainConfig = path.resolve(path.dirname(require.main.filename) + '/src/config/')
 		const dest = path.resolve('./')
+		const destConfig = path.resolve('./config')
 		const filter = (_, dest) => {
 			log(`${chalk.blue.bold(config.install.generate)} ${dest}`)
-			return true
+			return !/node_modules/.test(_)
+			// return true
 		}
 		const installModule = () => {
 			log(chalk.green(config.install.progress))
@@ -31,9 +35,9 @@ const action = {
 				})
 			})
 		}
-		// copy our template
-		fs.copy(src, dest, { filter: filter }, err => {
-			if (err) return error(err)
+
+		// acton after copy
+		const afterCopy = () => {
 			const date = new Date()
 			const now = `on ${date.getFullYear()}-${date.getMonth()}-${date.getDate()} at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
 			log(chalk.blue.bold(config.install.ready))
@@ -54,6 +58,39 @@ const action = {
 			} else {
 				installModule()
 			}
+		}
+
+		// copy main tpl
+		const copySrcTpl = (clb) => {
+			fs.copy(srcTpl, dest, { filter: filter })
+				.then(clb)
+				.catch(err => {
+					return err(err)
+				})
+		}
+
+		// copy mainConfig (package.json, rc file)
+		const copySrcMainConfig = (clb) => {
+			fs.copy(srcMainConfig, dest)
+				.then(clb)
+				.catch(err => {
+					return err(err)
+				})
+		}
+
+		// copy webpack config
+		const copySrcConfig = (clb) => {
+			fs.copy(srcConfig, destConfig)
+				.then(clb)
+				.catch(err => {
+					return err(err)
+				})
+		}
+
+		copySrcTpl(() => {
+			copySrcMainConfig(() => {
+				copySrcConfig(afterCopy)
+			})
 		})
 	},
 	/**
@@ -111,8 +148,7 @@ const action = {
 		if (findIndexBuildCommand !== -1) {
 			const webpackCommand = path.resolve('./node_modules/.bin/webpack')
 			const webpack = /^win/.test(process.platform) ? `${webpackCommand}.cmd` : webpackCommand
-			// set MODE_ABS env
-			console.log(options.wpTheme)
+
 			if (options.absolute && options.wpTheme) {
 				console.error('Cannot use both --absolute and --wp-theme');
 			}
