@@ -46,7 +46,7 @@
 **Option**   
 
    - **--absolute (alias -a) [optional]**: Set the [publicPath](https://webpack.js.org/guides/public-path/) into webpack config to absolute path.
-   - **--wp-theme &gt;theme_name&lt; (alias -t)**: Set [publicPath](https://webpack.js.org/guides/public-path/) to wordpress theme path `(wp-content/themes/<theme_name>)`
+   - **--wp-theme &lt;theme_name&gt; (alias -t)**: Set [publicPath](https://webpack.js.org/guides/public-path/) to wordpress theme path `(wp-content/themes/<theme_name>)`
 
 
 ## Features
