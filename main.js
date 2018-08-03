@@ -33,6 +33,7 @@ program
   .command('build')
   .description('Build the application to prod version')
   .option('-a, --absolute [optional]', 'Absolute path to assets')
+  .option('-t, --wp-theme <theme> [optional]', 'Set path to wordpress')
   .action(options => {
     action.build(argv, options)
   })

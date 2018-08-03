@@ -8,7 +8,7 @@ const common = {
   output: {
     filename: '[name].bundle.js',
     path: path.resolve('src/assets/dist'),
-    publicPath: `${process.env.MODE_ABS ? "" : "."}/assets/dist/`
+    publicPath: `${process.env.MODE_WP ? "/wp-content/themes/" + process.env.MODE_WP : (process.env.MODE_ABS ? "" : ".")}/assets/dist/`
   },
   resolve: {
       alias: {

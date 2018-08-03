@@ -112,7 +112,18 @@ const action = {
 			const webpackCommand = path.resolve('./node_modules/.bin/webpack')
 			const webpack = /^win/.test(process.platform) ? `${webpackCommand}.cmd` : webpackCommand
 			// set MODE_ABS env
-			process.env.MODE_ABS = options.absolute
+			console.log(options.wpTheme)
+			if (options.absolute && options.wpTheme) {
+				console.error('Cannot use both --absolute and --wp-theme');
+			}
+
+			if (options.absolute) {
+				process.env.MODE_ABS = options.absolute
+			}
+
+			if (options.wpTheme) {
+				process.env.MODE_WP = options.wpTheme
+			}
 
 			const execWebpackCommand = () => {
 				// execute webpack command
