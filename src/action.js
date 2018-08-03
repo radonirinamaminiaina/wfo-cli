@@ -19,7 +19,8 @@ const action = {
 		const destConfig = path.resolve('./config')
 		const filter = (_, dest) => {
 			log(`${chalk.blue.bold(config.install.generate)} ${dest}`)
-			return true
+			return !/node_modules/g.test(_)
+			// return true
 		}
 		const installModule = () => {
 			log(chalk.green(config.install.progress))
@@ -35,11 +36,7 @@ const action = {
 			})
 		}
 
-		// acton after copy
-		const afterCopy = () => {
-			const date = new Date()
-			const now = `on ${date.getFullYear()}-${date.getMonth()}-${date.getDate()} at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-			log(chalk.blue.bold(config.install.ready))
+		var gitInit = function () {
 			if (options.gitInit) {
 				// find for .git folder
 				if (!existsSync(path.resolve('./.git'))) {
@@ -57,6 +54,24 @@ const action = {
 			} else {
 				installModule()
 			}
+		}
+
+		// acton after copy
+		const afterCopy = () => {
+			const date = new Date()
+			const now = `on ${date.getFullYear()}-${date.getMonth()}-${date.getDate()} at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+			log(chalk.blue.bold(config.install.ready))
+			fs.readJson(path.resolve('./package.json')).then(function (main_package) {
+				if (options.using !== 'default') {
+					fs.readJson(path.resolve(path.dirname(require.main.filename) + '/src/templates/' + options.using + '.json')).then(package => {
+						main_package.dependencies = package.dependencies
+						fs.outputJSON(path.resolve('./package.json'), main_package)
+							.then(gitInit)
+					})
+				} else {
+					gitInit()
+				}
+			})
 		}
 
 		// copy main tpl
