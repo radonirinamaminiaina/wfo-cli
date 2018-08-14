@@ -17,7 +17,7 @@ const action = {
 		const srcConfig = path.resolve(path.dirname(require.main.filename) + '/src/webpack/')
 		const srcMainConfig = path.resolve(path.dirname(require.main.filename) + '/src/common/')
 		const dest = path.resolve('./')
-		const destConfig = path.resolve('./common')
+		const destConfig = path.resolve('./config')
 		const filter = (_, dest) => {
 			log(`${chalk.blue.bold(config.install.generate)} ${dest}`)
 			return !/node_modules/g.test(_)
@@ -63,7 +63,7 @@ const action = {
 		const afterCopy = () => {
 			log(chalk.blue.bold(config.install.ready))
 			fs.readJson(path.resolve('./package.json')).then(function (main_package) {
-				if (options.using && options.using !== 'default') {
+				if (options.using && options.using !== 'default') {	
 					fs.readJson(path.resolve(path.dirname(require.main.filename) + '/src/dependencies/' + options.using + '.json')).then(package => {
 						main_package.dependencies = package.dependencies
 						fs.writeFile(path.resolve('./package.json'), jsonFormat(main_package)).then(gitInit)
