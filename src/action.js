@@ -102,7 +102,8 @@ const action = {
 
 		copySrcTpl(() => {
 			copySrcMainConfig(() => {
-				fs.writeFile(path.resolve('./.gitignore'), `node_modules \n package-lock.json`)
+				const dataToBeIgnored = ['node_modules', 'package-lock.json']
+				fs.writeFile(path.resolve('./.gitignore'), dataToBeIgnored.join('\n'))
 				copySrcConfig(afterCopy)
 			})
 		})
