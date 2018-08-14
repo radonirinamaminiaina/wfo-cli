@@ -20,8 +20,10 @@ const action = {
 		const destConfig = path.resolve('./config')
 		const filter = (_, dest) => {
 			log(`${chalk.blue.bold(config.install.generate)} ${dest}`)
-			return !/node_modules/g.test(_)
-			// return true
+			if (/node_modules/g.test(_)) {
+				return !/node_modules/g.test(_)
+			}
+			return true
 		}
 		const installModule = () => {
 			log(chalk.green(config.install.progress))
