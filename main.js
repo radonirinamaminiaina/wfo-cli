@@ -9,7 +9,7 @@ if (!argv.length) {
 }
 
 program
-  .version('v1.9.6')
+  .version('v1.9.7')
   .description('front <command> [options]')
 
 program
