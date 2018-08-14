@@ -84,7 +84,7 @@ const action = {
 
 		// copy mainConfig (package.json, rc file)
 		const copySrcMainConfig = (clb) => {
-			fs.copy(srcMainConfig, dest)
+			fs.copy(srcMainConfig, dest, {filter: () => true})
 				.then(clb)
 				.catch(err => {
 					return err(err)
