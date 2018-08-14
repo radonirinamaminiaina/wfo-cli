@@ -18,21 +18,9 @@ const action = {
 		const srcMainConfig = path.resolve(path.dirname(require.main.filename) + '/src/common/')
 		const dest = path.resolve('./')
 		const destConfig = path.resolve('./config')
-		const bootstrapVariable = path.resolve('./node_modules/bootstrap/scss')
-		const destBootstrapVariable = path.resolve('./src/resources/lib/bootstrap')
 		const filter = (_, dest) => {
 			log(`${chalk.blue.bold(config.install.generate)} ${dest}`)
 			return true
-		}
-		const createBootstrapVariable = () => {
-			fs.copy(bootstrapVariable, destBootstrapVariable, {filter: _ => {
-				return /_variables\.scss/g.test(_)
-			}}).then(() => {
-				figlet(config.install.thanx, (err, data) => {
-					if (err) return error(err)
-					log(chalk.green(data))
-				})
-			}).catch(e => console.log(e))
 		}
 		const installModule = () => {
 			log(chalk.green(config.install.progress))
@@ -41,7 +29,10 @@ const action = {
 				if (err) return error(err)
 				log(chalk.blue.bold(config.install.complete))
 				log(chalk.blue.bold(config.install.completeInstruct))
-				setTimeout(createBootstrapVariable, 1000)
+				figlet(config.install.thanx, (err, data) => {
+					if (err) return error(err)
+					log(chalk.green(data))
+				})
 			})
 		}
 
