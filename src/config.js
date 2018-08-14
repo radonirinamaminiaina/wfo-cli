@@ -1,10 +1,6 @@
 module.exports = {
   install: {
-    start: (options) => `\n\n 
-    +---------------------------------------------------------------------------------------------+
-    | Front generator is serving at http://${options.host || 'localhost'}:${options.port || 8080} |
-    +---------------------------------------------------------------------------------------------+
-    \n\n`,
+    start: (options) => `\n\n Front generator is serving at http://${options.host || 'localhost'}:${options.port || 8080} \n\n`,
     progress: '\n\nInstalling your module ...',
     generate: 'Generate',
     generateTpl: `
