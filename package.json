@@ -1,6 +1,6 @@
 {
   "name": "wfo-cli",
-  "version": "1.8.9",
+  "version": "1.9.0",
   "description": "front-end cli generator",
   "main": "main.js",
   "scripts": {
