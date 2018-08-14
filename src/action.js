@@ -7,6 +7,7 @@ const log = console.log
 const error = console.error
 const { existsSync } = require('fs')
 const config = require('./config')
+const jsonFormat = require('json-format')
 
 const findIndex = (arg, command) => { arg.findIndex((element) => element === command) }
 const action = {
@@ -14,9 +15,9 @@ const action = {
 		const template = options.using ? options.using : 'default'
 		const srcTpl = path.resolve(path.dirname(require.main.filename) + '/templates/' + template)
 		const srcConfig = path.resolve(path.dirname(require.main.filename) + '/src/webpack/')
-		const srcMainConfig = path.resolve(path.dirname(require.main.filename) + '/src/config/')
+		const srcMainConfig = path.resolve(path.dirname(require.main.filename) + '/src/common/')
 		const dest = path.resolve('./')
-		const destConfig = path.resolve('./config')
+		const destConfig = path.resolve('./common')
 		const filter = (_, dest) => {
 			log(`${chalk.blue.bold(config.install.generate)} ${dest}`)
 			return !/node_modules/g.test(_)
@@ -36,7 +37,9 @@ const action = {
 			})
 		}
 
-		var gitInit = function () {
+		let gitInit = function () {
+			const date = new Date()
+			const now = `on ${date.getFullYear()}-${date.getMonth()}-${date.getDate()} at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
 			if (options.gitInit) {
 				// find for .git folder
 				if (!existsSync(path.resolve('./.git'))) {
@@ -58,15 +61,12 @@ const action = {
 
 		// acton after copy
 		const afterCopy = () => {
-			const date = new Date()
-			const now = `on ${date.getFullYear()}-${date.getMonth()}-${date.getDate()} at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
 			log(chalk.blue.bold(config.install.ready))
 			fs.readJson(path.resolve('./package.json')).then(function (main_package) {
-				if (options.using !== 'default') {
-					fs.readJson(path.resolve(path.dirname(require.main.filename) + '/src/templates/' + options.using + '.json')).then(package => {
+				if (options.using && options.using !== 'default') {
+					fs.readJson(path.resolve(path.dirname(require.main.filename) + '/src/dependencies/' + options.using + '.json')).then(package => {
 						main_package.dependencies = package.dependencies
-						fs.outputJSON(path.resolve('./package.json'), main_package)
-							.then(gitInit)
+						fs.writeFile(path.resolve('./package.json'), jsonFormat(main_package)).then(gitInit)
 					})
 				} else {
 					gitInit()
@@ -134,7 +134,7 @@ const action = {
 	serve: (arg, options) => {
 		const findIndexServeCommand = findIndex(arg, 'serve')
 		if (findIndexServeCommand !== -1) {
-			// defined env var
+			// defined env variables
 			if (options.port) process.env.PORT = options.port
 			if (options.host) process.env.HOST = options.host
 
